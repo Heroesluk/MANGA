@@ -55,6 +55,26 @@ druk()
 
 
 
+def uzupelnij():
+    ListaSezonu = ['Tate no Yuusha no Nariagari - 15', 'Carole & Tuesday - 02', 'RobiHachi - 02', 'Sarazanmai - 02']
+
+    with open('anime.txt', 'wb') as f:
+        for item in ListaSezonu:
+            f.write("%s\n" % item)
+
+
+
+with open('anime.txt', 'r') as f:
+    content = f.readlines()
+    content = [x.strip() for x in content]
+
+
+
+
+print('\n')
+
+
+
 
 
 
@@ -62,10 +82,9 @@ druk()
 new = 'Tate no Yuusha no Nariagari - 15'
 
 
-
-
 def sprawdzanie(EpisodeList):
-    a=0
+    a=0 #a = index torrenta
+    # i = nazwa odcinka
     for i in EpisodeList:
         if new in i and 'HorribleSubs' in i:
             return i,a
@@ -81,9 +100,13 @@ def sprawdzanie(EpisodeList):
             return i,a
         a = a + 1
 
+try:
+    epizod, a = sprawdzanie(EpisodeList)
+    print(epizod, LinkFixed[4])
+except:
+    print('brak nowego odcinka')
 
-epizod, a = sprawdzanie(EpisodeList)
-print(epizod, LinkFixed[4])
+
 
 
 
