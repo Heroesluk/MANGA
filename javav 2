@@ -1,0 +1,36 @@
+import json
+import re
+import os
+
+def extract(raw_data):
+    pattern = re.compile(
+        r'\'lap\': (\d), \'car\': (\d), \'sectors\': (\[(?:\d+,*\s*)*]), \'time\': ([-\d]\d+), \'cuts\': (\d), \'tyre\': \'([a-zA-Z]+)')
+
+    values = (re.findall(pattern, str(raw_data))) #Find all lap data in the file
+    print('found', len(values),'laps')
+
+    keys = ['lap_number', 'car', 'sectors', 'time', 'cuts', 'tyre']
+    list_of_valkeys = []
+    for i in values:
+        if i[1] != '0':
+            pass
+        else:
+            list_of_valkeys.append(dict(zip(keys, i))) #creates a dict out of keys, and lap data
+
+    print(len(list_of_valkeys), 'laps out of', len(values), 'were the player ones')
+    print('\n')
+
+    return  list_of_valkeys
+
+
+
+list_of_valkeys = []
+for file in os.listdir('C:\\Users\DOMOWY\AppData\Local\AcTools Content Manager\Progress\Sessions'):
+    x = open(os.path.join('C:\\Users\DOMOWY\AppData\Local\AcTools Content Manager\Progress\Sessions',file),encoding="utf8")
+    y = json.load(x)
+    raw_data = y['sessions'][0]
+    list_of_valkeys = list_of_valkeys + extract(raw_data) #sums the lap-dicts from all files
+
+
+print(len(list_of_valkeys))
+
